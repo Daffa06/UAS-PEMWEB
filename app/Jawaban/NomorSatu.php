@@ -15,22 +15,19 @@ class NomorSatu {
             'password' => 'required|string',
         ]);
 
-        // Proses autentikasi
         if (Auth::attempt($credentials)) {
             // Jika berhasil login
-            $request->session()->regenerate(); // Regenerasi sesi untuk keamanan
+            $request->session()->regenerate();
             return redirect()->route('event.home')->with('success', 'Login successful!');
         }
 
         // Jika gagal login
         return back()->withErrors([
             'email' => 'Invalid credentials provided.',
-        ])->withInput($request->except('password')); // Mengembalikan input kecuali password
+        ])->withInput($request->except('password'));
     }
 
     public function logout(Request $request) {
-
-        // Proses logout
         Auth::logout();
 
         // Menghapus semua sesi

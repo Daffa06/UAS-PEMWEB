@@ -15,7 +15,6 @@ class NomorTiga {
     }
 
     public function getSelectedData(Request $request) {
-        // Validasi ID jadwal
         $request->validate(['id' => 'required|integer|exists:events,id']);
 
         // Mengambil data jadwal berdasarkan ID
@@ -26,7 +25,7 @@ class NomorTiga {
         // Mengembalikan response JSON dengan data yang disesuaikan
         return response()->json([
             'id' => $data->id,
-            'event' => $data->name, // Mengganti 'name' dengan 'event' untuk konsistensi
+            'event' => $data->name,
             'start' => $data->start,
             'end' => $data->end,
         ]);
@@ -36,7 +35,7 @@ class NomorTiga {
         // Validasi data input
         $request->validate([
             'id' => 'required|integer|exists:events,id',
-            'event' => 'required|string|max:255', // Menggunakan 'event' untuk nama kegiatan
+            'event' => 'required|string|max:255',
             'start' => 'required|date',
             'end' => 'required|date|after_or_equal:start',
         ]);
@@ -45,7 +44,7 @@ class NomorTiga {
         Event::where('id', $request->id)
             ->where('user_id', Auth::id())
             ->update([
-                'name' => $request->event, // Menggunakan 'event' untuk menyimpan ke kolom 'name'
+                'name' => $request->event,
                 'start' => $request->start,
                 'end' => $request->end,
             ]);
@@ -54,7 +53,6 @@ class NomorTiga {
     }
 
     public function delete(Request $request) {
-        // Validasi ID jadwal
         $request->validate(['id' => 'required|integer|exists:events,id']);
 
         // Menghapus data jadwal

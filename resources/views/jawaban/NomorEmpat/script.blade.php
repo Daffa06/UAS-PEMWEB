@@ -1,6 +1,6 @@
 <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar'); // Element untuk menampilkan kalender
+        var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth', // Tampilan bulanan
             events: '/event/get-json', // Endpoint API untuk mengambil data jadwal
@@ -9,8 +9,8 @@
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay',
             },
-            eventColor: '#378006', // Default warna event
+            eventColor: '#378006',
         });
-        calendar.render(); // Render kalender
+        calendar.render();
     });
 </script>

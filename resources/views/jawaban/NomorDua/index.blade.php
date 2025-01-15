@@ -1,7 +1,7 @@
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <form class="modal-content" method="POST" action="{{ route('event.submit') }}">
-            @csrf <!-- Token CSRF untuk keamanan -->
+            @csrf
             <div class="modal-header">
                 <h5 class="modal-title" id="addModalLabel">Tambah Jadwal</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

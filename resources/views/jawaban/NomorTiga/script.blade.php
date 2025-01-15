@@ -12,11 +12,10 @@
 
     // Trigger untuk tombol edit
     $(document).on('click', '.btn-edit', function () {
-    console.log('Tombol Edit diklik'); // Tambahkan ini
+    console.log('Tombol Edit diklik');
     const id = $(this).data('id');
     console.log('ID:', id); // Debug ID yang diambil
 
-    // Panggil API untuk mendapatkan data jadwal
     $.ajax({
         url: "{{ route('event.get-selected-data') }}",
         type: "GET",
@@ -35,8 +34,5 @@
         	},
     	});
 	});
-	
-	// Tuliskan trigger saat menekan tombol edit
-	// Di dalam trigger tersebut, tambahkan API untuk meload data 1 jadwal
 
 </script>
