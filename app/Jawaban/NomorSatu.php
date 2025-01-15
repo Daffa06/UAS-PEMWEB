@@ -7,19 +7,38 @@ use Illuminate\Http\Request;
 
 class NomorSatu {
 
-	public function auth (Request $request) {
+    public function auth(Request $request) {
 
-		// Tuliskan code untuk proses login dengan menggunakan email/username dan password
+        // Validasi input email/username dan password
+        $credentials = $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string',
+        ]);
 
-		return redirect()->route('event.home');
-	}
+        // Proses autentikasi
+        if (Auth::attempt($credentials)) {
+            // Jika berhasil login
+            $request->session()->regenerate(); // Regenerasi sesi untuk keamanan
+            return redirect()->route('event.home')->with('success', 'Login successful!');
+        }
 
-	public function logout (Request $request) {
+        // Jika gagal login
+        return back()->withErrors([
+            'email' => 'Invalid credentials provided.',
+        ])->withInput($request->except('password')); // Mengembalikan input kecuali password
+    }
 
-		// Tuliskan code untuk menangani proses logout
-        
-        return redirect()->route('event.home');
-	}
+    public function logout(Request $request) {
+
+        // Proses logout
+        Auth::logout();
+
+        // Menghapus semua sesi
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('event.home')->with('success', 'You have been logged out.');
+    }
 }
 
 ?>

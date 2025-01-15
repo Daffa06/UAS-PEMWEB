@@ -8,30 +8,56 @@ use App\Models\Event;
 
 class NomorTiga {
 
-	public function getData () {
-		// Tuliskan code mengambil semua data jadwal user, simpan di variabel $data 
-		$data = [];
-		return $data;
-	}
+    public function getData() {
+        // Mengambil semua data jadwal milik user yang sedang login
+        $data = Event::where('user_id', Auth::id())->get();
+        return $data;
+    }
 
-	public function getSelectedData (Request $request) {
+    public function getSelectedData(Request $request) {
+        // Validasi ID jadwal
+        $request->validate(['id' => 'required|integer|exists:events,id']);
 
-		// Tuliskan code mengambil 1 data jadwal user dengan id jadwal, simpan di variabel $data 
-		$data = [];
-		return response()->json($data);
-	}
+        // Mengambil data jadwal berdasarkan ID
+        $data = Event::where('id', $request->id)
+            ->where('user_id', Auth::id())
+            ->first();
 
-	public function update (Request $request) {
+        return response()->json($data);
+    }
 
-		// Tuliskan code mengupdate 1 jadwal
-		return redirect()->route('event.home');
-	}
+    public function update(Request $request) {
+        // Validasi data input
+        $request->validate([
+            'id' => 'required|integer|exists:events,id',
+            'name' => 'required|string|max:255',
+            'start' => 'required|date',
+            'end' => 'required|date|after_or_equal:start',
+        ]);
 
-	public function delete (Request $request) {
+        // Mengupdate data jadwal
+        Event::where('id', $request->id)
+            ->where('user_id', Auth::id())
+            ->update([
+                'name' => $request->event,
+                'start' => $request->start,
+                'end' => $request->end,
+            ]);
 
-		// Tuliskan code menghapus 1 jadwal
-		return redirect()->route('event.home');
-	}
+        return redirect()->route('event.home')->with('success', 'Jadwal berhasil diperbarui.');
+    }
+
+    public function delete(Request $request) {
+        // Validasi ID jadwal
+        $request->validate(['id' => 'required|integer|exists:events,id']);
+
+        // Menghapus data jadwal
+        Event::where('id', $request->id)
+            ->where('user_id', Auth::id())
+            ->delete();
+
+        return redirect()->route('event.home')->with('success', 'Jadwal berhasil dihapus.');
+    }
 }
 
 ?>
