@@ -23,14 +23,20 @@ class NomorTiga {
             ->where('user_id', Auth::id())
             ->first();
 
-        return response()->json($data);
+        // Mengembalikan response JSON dengan data yang disesuaikan
+        return response()->json([
+            'id' => $data->id,
+            'event' => $data->name, // Mengganti 'name' dengan 'event' untuk konsistensi
+            'start' => $data->start,
+            'end' => $data->end,
+        ]);
     }
 
     public function update(Request $request) {
         // Validasi data input
         $request->validate([
             'id' => 'required|integer|exists:events,id',
-            'name' => 'required|string|max:255',
+            'event' => 'required|string|max:255', // Menggunakan 'event' untuk nama kegiatan
             'start' => 'required|date',
             'end' => 'required|date|after_or_equal:start',
         ]);
@@ -39,7 +45,7 @@ class NomorTiga {
         Event::where('id', $request->id)
             ->where('user_id', Auth::id())
             ->update([
-                'name' => $request->event,
+                'name' => $request->event, // Menggunakan 'event' untuk menyimpan ke kolom 'name'
                 'start' => $request->start,
                 'end' => $request->end,
             ]);

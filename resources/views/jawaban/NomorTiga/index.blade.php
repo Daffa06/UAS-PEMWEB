@@ -1,4 +1,5 @@
 <table class="table table-schedule">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <thead>
         <tr>
             <th>Nama Kegiatan</th>
@@ -25,6 +26,8 @@
         @endforeach
     </tbody>
 </table>
+
+@include('jawaban.NomorTiga.modal')
 
 <!-- Gunakan tag form dibawah ini untuk submit data jadwal yang akan diupdate. Gunakan contoh modal yang sudah dibuat pada nomor 1 dan 2 sebagai referensi -->
 <!-- <form class="modal-content" method="POST" action="{{ route('event.update') }}"> </form> -->
